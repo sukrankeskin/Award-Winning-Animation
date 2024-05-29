@@ -4,7 +4,8 @@
       v-for="(image, index) in images"
       :key="index"
       :src="image"
-      class="image"
+      :class="{ image: true, selected: index === selectedIndex }"
+      @click="toggleZoom(index)"
       draggable="false"
     />
   </div>
@@ -22,7 +23,19 @@ export default {
         "https://images.unsplash.com/photo-1715638427009-8b0fe7096838?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "https://images.unsplash.com/photo-1716551615759-ddec6536eb11?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       ],
+      selectedIndex: null,
     };
+  },
+  methods: {
+    toggleZoom(index) {
+      if (this.selectedIndex === index) {
+        // Eğer zaten seçili olan resme tıklanırsa, zoom'u kapat
+        this.selectedIndex = null;
+      } else {
+        // Aksi halde tıklanan resmi zoom yap
+        this.selectedIndex = index;
+      }
+    },
   },
   mounted() {
     const track = document.getElementById("image-track");
@@ -72,16 +85,23 @@ export default {
 
 <style>
 #image-track > .image {
-  width: 40vmin;
-  height: 56vmin;
+  width: 40vmin; /* Normal boyut */
+  height: 56vmin; /* Normal boyut */
   object-fit: cover;
   object-position: center center;
-  cursor: pointer;
+  transition: width 0.2s, height 0.2s; /* Geçiş efekti */
+}
+
+#image-track > .image.selected {
+  width: 60vmin;
+  height: 84vmin;
+  z-index: 1;
 }
 #image-track {
   display: flex;
   gap: 4vmin;
   position: absolute;
+  align-items: center;
   left: 50%;
   top: 50%;
   transform: translate(0%, -50%);
