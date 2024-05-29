@@ -105,6 +105,7 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(0%, -50%);
-  transition: transform 0.2s ease-out;
+  transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
 }
 </style>
