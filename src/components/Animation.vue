@@ -76,6 +76,7 @@ export default {
   height: 56vmin;
   object-fit: cover;
   object-position: center center;
+  cursor: pointer;
 }
 #image-track {
   display: flex;
